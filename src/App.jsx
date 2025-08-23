@@ -43,7 +43,10 @@ function AppContent() {
       console.log('API Key:', API_KEY ? `${API_KEY.substring(0, 4)}...` : 'NOT SET');
       console.log('Base URL:', BASE_URL);
 
-      const response = await fetch(`${BASE_URL}?s=${encodeURIComponent(query)}&apikey=${API_KEY}`);
+      const fullUrl = `${BASE_URL}?s=${encodeURIComponent(query)}&apikey=${API_KEY}`;
+      console.log('Full URL being called:', fullUrl);
+      
+      const response = await fetch(fullUrl);
       
       console.log('Response status:', response.status);
       console.log('Response ok:', response.ok);
