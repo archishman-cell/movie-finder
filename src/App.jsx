@@ -29,9 +29,17 @@ function AppContent() {
   }, []);
 
   // Search movies by title
-  const searchMovies = async (query) => {
+  const searchMovies = async (query, page = 1) => {
     if (!query.trim()) {
       setMovies([]);
+      setError(null);
+      return;
+    }
+
+    // Don't search for very short queries (less than 3 characters)
+    if (query.trim().length < 3) {
+      setMovies([]);
+      setError(null);
       return;
     }
 
@@ -58,16 +66,17 @@ function AppContent() {
       const data = await response.json();
       console.log('API Response:', data);
 
-      if (data.Response === 'True') {
+      if (data.Response === 'True' && data.Search && data.Search.length > 0) {
         // Fetch detailed info for each movie
         const detailedMovies = await Promise.all(
-          data.Search.slice(0, 12).map(async (movie) => {
+          data.Search.map(async (movie) => {
             const detailResponse = await fetch(`${BASE_URL}?i=${movie.imdbID}&apikey=${API_KEY}`);
             const detailData = await detailResponse.json();
             return detailData;
           })
         );
         setMovies(detailedMovies);
+        setError(null);
       } else {
         setMovies([]);
         // Check if it's an API key error
@@ -90,6 +99,7 @@ function AppContent() {
       } else {
         setError('Failed to fetch movies. Please try again.');
       }
+      setMovies([]);
     } finally {
       setLoading(false);
     }
@@ -98,10 +108,14 @@ function AppContent() {
   // Debounced search effect
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      if (searchQuery) {
+      if (searchQuery && searchQuery.trim().length >= 3) {
         searchMovies(searchQuery);
+      } else if (searchQuery.trim().length < 3) {
+        setMovies([]);
+        setError(null);
       } else {
         setMovies([]);
+        setError(null);
       }
     }, 500);
 
@@ -122,6 +136,10 @@ function AppContent() {
     setSelectedMovie(null);
   };
 
+  // Pagination functions
+
+
+
   return (
     <div className="min-h-screen gradient-theme relative overflow-hidden no-scrollbar transition-colors duration-300">
       {/* Background decorative elements */}
@@ -133,10 +151,10 @@ function AppContent() {
 
       <Navbar onSearch={handleSearch} searchValue={searchQuery} />
       
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-16 relative z-10">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 pt-28 pb-24 relative z-10 smooth-scroll">
         {/* Enhanced Search Results Header */}
         {searchQuery && (
-          <div className="mb-12 text-center">
+          <div className="mb-12 text-center search-results smooth-scroll">
             {loading ? (
               <div className="flex items-center justify-center space-x-4">
                 <div className="relative">
@@ -159,7 +177,7 @@ function AppContent() {
               </div>
             ) : (
               <div className="space-y-4">
-                <div className="card-theme backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-theme">
+                <div className="card-theme backdrop-blur-sm rounded-2xl p-8 ">
                   <h2 className="text-3xl font-bold bg-gradient-to-r from-theme-primary via-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
                     {movies.length} movie{movies.length !== 1 ? 's' : ''} found
                   </h2>
@@ -186,7 +204,7 @@ function AppContent() {
             <p className="text-theme-tertiary text-sm mt-2">Fetching the best cinematic experiences</p>
           </div>
         ) : movies.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 movie-grid smooth-scroll">
             {movies.map((movie, index) => (
               <div 
                 key={movie.imdbID}
@@ -264,11 +282,11 @@ function AppContent() {
       </main>
 
       {/* Enhanced Slim Sticky Footer */}
-      <footer className="bg-theme-primary backdrop-blur-xl border-t border-theme sticky bottom-0 z-30 shadow-lg transition-all duration-300">
+      <footer className="bg-theme-primary backdrop-blur-xl border-t border-theme fixed bottom-0 left-0 right-0 z-30 shadow-lg transition-all duration-300 smooth-scroll">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <div className="flex flex-col sm:flex-row items-center justify-between text-xs sm:text-sm text-theme-secondary">
             <div className="flex items-center space-x-2 sm:space-x-4 mb-2 sm:mb-0">
-              <span className="font-medium">© 2024 Movie Finder</span>
+              <span className="font-medium">© 2025 Movie Finder</span>
               <span className="w-1 h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"></span>
               <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent font-semibold">Powered by OMDB API</span>
             </div>

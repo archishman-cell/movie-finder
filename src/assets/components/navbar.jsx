@@ -15,7 +15,7 @@ function Navbar({ onSearch, searchValue }) {
   };
 
   return (
-    <nav className="bg-theme-primary backdrop-blur-xl border-b border-theme sticky top-0 z-40 shadow-lg transition-all duration-300">
+    <nav className="bg-theme-primary backdrop-blur-xl border-b border-theme fixed top-0 left-0 right-0 z-40 shadow-lg transition-all duration-300 smooth-scroll">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 sm:py-6">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0 md:space-x-6">
           {/* Logo and Title */}

@@ -180,8 +180,33 @@
   animation: pulse-glow 2s ease-in-out infinite;
 }
 
-/* Smooth scrolling */
+/* Enhanced Smooth scrolling */
 html {
+  scroll-behavior: smooth;
+}
+
+/* Smooth scrolling for all elements */
+* {
+  scroll-behavior: smooth;
+}
+
+/* Custom smooth scrolling for specific elements */
+.smooth-scroll {
+  scroll-behavior: smooth;
+}
+
+/* Enhanced smooth scrolling for movie grid animations */
+.movie-grid {
+  scroll-behavior: smooth;
+}
+
+/* Smooth scrolling for modal content */
+.modal-content {
+  scroll-behavior: smooth;
+}
+
+/* Smooth scrolling for search results */
+.search-results {
   scroll-behavior: smooth;
 }
 
@@ -321,6 +346,7 @@ body {
 /* Floating elements */
 .floating {
   animation: float 6s ease-in-out infinite;
+  
 }
 
 .floating-delay-1 {

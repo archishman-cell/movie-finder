@@ -14,11 +14,11 @@ const MovieDetail = ({ movie, isOpen, onClose }) => {
       className="fixed inset-0 bg-white backdrop-blur-sm flex items-center justify-center p-2 sm:p-4 z-50 animate-fadeIn"
       onClick={handleBackdropClick}
     >
-      <div className="modal-theme backdrop-blur-xl rounded-3xl shadow-2xl shadow-theme/20 max-w-5xl w-full max-h-[90vh] overflow-y-auto no-scrollbar animate-slideUp border border-theme relative transition-all duration-300">
+      <div className="modal-theme backdrop-blur-xl rounded-3xl shadow-2xl shadow-theme/20 max-w-5xl w-full max-h-[90vh] overflow-y-auto no-scrollbar animate-slideUp border border-theme relative transition-all duration-300 modal-content smooth-scroll">
         {/* Enhanced Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 sm:top-6 right-4 sm:right-6 text-theme-secondary hover:text-red-500 transition-all duration-300 z-10 group"
+          className="absolute top-4 sm:top-6 left-4 sm:left-6 text-theme-secondary hover:text-red-500 transition-all duration-300 z-10 group"
         >
           <div className="bg-theme-primary/80 backdrop-blur-sm rounded-full p-2 shadow-lg border border-theme group-hover:bg-red-50 group-hover:border-red-200 transition-all duration-300">
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
