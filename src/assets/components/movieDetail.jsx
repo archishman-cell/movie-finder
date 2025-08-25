@@ -1,8 +1,6 @@
 import React from 'react';
-import { useTheme } from '../../contexts/ThemeContext';
 
 const MovieDetail = ({ movie, isOpen, onClose }) => {
-  const { theme } = useTheme();
   if (!isOpen || !movie) return null;
 
   const handleBackdropClick = (e) => {
@@ -13,10 +11,10 @@ const MovieDetail = ({ movie, isOpen, onClose }) => {
 
   return (
     <div 
-      className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4 z-50 animate-fadeIn"
+      className="fixed inset-0 bg-white backdrop-blur-sm flex items-center justify-center p-2 sm:p-4 z-50 animate-fadeIn"
       onClick={handleBackdropClick}
     >
-      <div className="modal-theme backdrop-blur-xl rounded-3xl shadow-2xl shadow-gray-400/20 max-w-5xl w-full max-h-[90vh] overflow-y-auto animate-slideUp border border-theme relative transition-all duration-300">
+      <div className="modal-theme backdrop-blur-xl rounded-3xl shadow-2xl shadow-theme/20 max-w-5xl w-full max-h-[90vh] overflow-y-auto no-scrollbar animate-slideUp border border-theme relative transition-all duration-300">
         {/* Enhanced Close Button */}
         <button
           onClick={onClose}
@@ -33,7 +31,7 @@ const MovieDetail = ({ movie, isOpen, onClose }) => {
           {/* Enhanced Poster Section */}
           <div className="lg:w-2/5 p-4 sm:p-8">
             <div className="relative group">
-              <div className="relative overflow-hidden rounded-2xl shadow-2xl shadow-gray-400/20">
+              <div className="relative overflow-hidden rounded-2xl shadow-2xl shadow-theme/20">
                 <img
                   src={movie.Poster && movie.Poster !== 'N/A' ? movie.Poster : 'https://via.placeholder.com/400x600/f3f4f6/6b7280?text=No+Poster'}
                   alt={movie.Title}
@@ -94,12 +92,12 @@ const MovieDetail = ({ movie, isOpen, onClose }) => {
             {/* Enhanced Genre Tags */}
             {movie.Genre && movie.Genre !== 'N/A' && (
               <div className="mb-6">
-                <h3 className="text-lg font-semibold text-gray-700 mb-3">Genres</h3>
+                <h3 className="text-lg font-semibold text-theme-primary mb-3">Genres</h3>
                 <div className="flex flex-wrap gap-3">
                   {movie.Genre.split(', ').map((genre, index) => (
                     <span
                       key={index}
-                      className="bg-theme-tertiary text-theme-primary px-4 py-2 rounded-full text-sm font-medium shadow-lg transform hover:scale-105 transition-all duration-300 hover:shadow-xl hover:shadow-gray-400/30"
+                      className="bg-theme-tertiary text-theme-primary px-4 py-2 rounded-full text-sm font-medium shadow-lg transform hover:scale-105 transition-all duration-300 hover:shadow-xl hover:shadow-theme/30"
                     >
                       {genre}
                     </span>
@@ -186,7 +184,7 @@ const MovieDetail = ({ movie, isOpen, onClose }) => {
 
             {/* Enhanced Action Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 pt-6 border-t border-theme">
-              <button className="flex-1 bg-theme-tertiary text-theme-primary py-3 sm:py-4 px-6 sm:px-8 rounded-2xl font-semibold hover:bg-theme-tertiary/90 transition-all duration-300 hover:shadow-xl hover:shadow-gray-400/30 transform hover:scale-105">
+                              <button className="flex-1 bg-theme-tertiary text-theme-primary py-3 sm:py-4 px-6 sm:px-8 rounded-2xl font-semibold hover:bg-theme-tertiary/90 transition-all duration-300 hover:shadow-xl hover:shadow-theme/30 transform hover:scale-105">
                 <div className="flex items-center justify-center space-x-2">
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />

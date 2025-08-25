@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ThemeToggle from './ThemeToggle';
+// ThemeToggle removed to disable dark mode functionality
 
 function Navbar({ onSearch, searchValue }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -22,7 +22,7 @@ function Navbar({ onSearch, searchValue }) {
           <div className="flex items-center justify-between w-full md:w-auto">
             <div className="flex items-center space-x-4">
               {/* Enhanced Logo */}
-              <div className="flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 bg-theme-tertiary rounded-2xl shadow-xl shadow-gray-400/25 transform hover:scale-110 transition-all duration-300 hover:rotate-3">
+              <div className="flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 bg-theme-tertiary rounded-2xl shadow-xl shadow-theme/25 transform hover:scale-110 transition-all duration-300 hover:rotate-3">
                 <svg className="w-6 h-6 sm:w-7 sm:h-7 text-theme-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 4V2a1 1 0 011-1h8a1 1 0 011 1v2m-9 0h10m-10 0a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V6a2 2 0 00-2-2" />
                 </svg>
@@ -43,7 +43,6 @@ function Navbar({ onSearch, searchValue }) {
             
             {/* Mobile menu button */}
             <div className="flex items-center space-x-4 md:hidden">
-              <ThemeToggle />
               <button 
                 onClick={toggleMenu}
                 className="p-2 rounded-lg bg-theme-secondary text-theme-primary focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -57,16 +56,14 @@ function Navbar({ onSearch, searchValue }) {
                   {isMenuOpen ? (
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                   ) : (
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                   )}
                 </svg>
               </button>
             </div>
             
             {/* Desktop theme toggle */}
-            <div className="hidden md:flex md:items-center md:ml-4">
-              <ThemeToggle />
-            </div>
+            {/* Theme toggle removed */}
           </div>
 
           {/* Enhanced Search Input - Responsive */}
@@ -87,7 +84,7 @@ function Navbar({ onSearch, searchValue }) {
                 placeholder="Search movies, directors, genres..."
                 value={searchValue}
                 onChange={handleSearch}
-                className="w-full pl-12 sm:pl-16 pr-4 sm:pr-6 py-3 sm:py-4 text-theme-primary bg-theme-secondary backdrop-blur-sm border border-theme rounded-xl sm:rounded-2xl focus:outline-none focus:ring-4 focus:ring-gray-400/20 focus:border-gray-400 transition-all duration-300 placeholder:text-theme-tertiary hover:shadow-lg"
+                className="w-full pl-12 sm:pl-16 pr-4 sm:pr-6 py-3 sm:py-4 text-theme-primary bg-theme-secondary backdrop-blur-sm border border-theme rounded-xl sm:rounded-2xl focus:outline-none focus:ring-4 focus:ring-theme/20 focus:border-theme transition-all duration-300 placeholder:text-theme-tertiary hover:shadow-lg"
               />
               
               {/* Glowing effect on focus */}

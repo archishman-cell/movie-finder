@@ -3,7 +3,7 @@ import './App.css';
 import Navbar from './assets/components/navbar';
 import Movie from './assets/components/movie';
 import MovieDetail from './assets/components/movieDetail';
-import { ThemeProvider } from './contexts/ThemeContext';
+// ThemeProvider removed to disable dark mode functionality
 
 function AppContent() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -123,7 +123,7 @@ function AppContent() {
   };
 
   return (
-    <div className="min-h-screen gradient-theme relative overflow-hidden transition-colors duration-300">
+    <div className="min-h-screen gradient-theme relative overflow-hidden no-scrollbar transition-colors duration-300">
       {/* Background decorative elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-3xl transition-all duration-500"></div>
@@ -143,10 +143,10 @@ function AppContent() {
                   <div className="w-8 h-8 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin"></div>
                   <div className="absolute inset-0 w-8 h-8 border-4 border-transparent border-t-purple-600 rounded-full animate-spin" style={{animationDirection: 'reverse', animationDuration: '1.5s'}}></div>
                 </div>
-                <p className="text-gray-600 text-xl font-medium">Searching for movies...</p>
+                <p className="text-theme-secondary text-xl font-medium">Searching for movies...</p>
               </div>
             ) : error ? (
-              <div className="bg-gradient-to-r from-red-50 to-pink-50 border border-red-200 rounded-2xl p-6 max-w-md mx-auto shadow-lg">
+              <div className="card-theme backdrop-blur-sm border border-red-200 rounded-2xl p-6 max-w-md mx-auto shadow-lg">
                 <div className="flex items-center justify-center space-x-3 mb-3">
                   <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
                     <svg className="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -159,11 +159,11 @@ function AppContent() {
               </div>
             ) : (
               <div className="space-y-4">
-                <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-8 shadow-lg border border-blue-100">
-                  <h2 className="text-3xl font-bold bg-gradient-to-r from-gray-900 via-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
+                <div className="card-theme backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-theme">
+                  <h2 className="text-3xl font-bold bg-gradient-to-r from-theme-primary via-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
                     {movies.length} movie{movies.length !== 1 ? 's' : ''} found
                   </h2>
-                  <p className="text-gray-600 text-lg">Results for "{searchQuery}"</p>
+                  <p className="text-theme-secondary text-lg">Results for "{searchQuery}"</p>
                   <div className="mt-4 flex items-center justify-center space-x-2">
                     <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
                     <div className="w-2 h-2 bg-purple-500 rounded-full animate-pulse" style={{animationDelay: '0.2s'}}></div>
@@ -182,8 +182,8 @@ function AppContent() {
               <div className="w-16 h-16 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin"></div>
               <div className="absolute inset-0 w-16 h-16 border-4 border-transparent border-t-purple-600 rounded-full animate-spin" style={{animationDirection: 'reverse', animationDuration: '1.5s'}}></div>
             </div>
-            <p className="mt-6 text-gray-600 text-xl font-medium">Loading movies...</p>
-            <p className="text-gray-500 text-sm mt-2">Fetching the best cinematic experiences</p>
+            <p className="mt-6 text-theme-secondary text-xl font-medium">Loading movies...</p>
+            <p className="text-theme-tertiary text-sm mt-2">Fetching the best cinematic experiences</p>
           </div>
         ) : movies.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
@@ -205,7 +205,7 @@ function AppContent() {
           </div>
         ) : searchQuery && !loading ? (
           <div className="text-center py-20">
-            <div className="w-32 h-32 mx-auto mb-8 text-gray-300 relative">
+            <div className="w-32 h-32 mx-auto mb-8 text-theme-tertiary relative">
               <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" className="w-full h-full">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 15c-2.34 0-4.47-.881-6.08-2.33" />
               </svg>
@@ -216,13 +216,13 @@ function AppContent() {
           </div>
         ) : (
           <div className="text-center py-20">
-            <div className="w-32 h-32 mx-auto mb-8 text-gray-300 relative">
+            <div className="w-32 h-32 mx-auto mb-8 text-theme-tertiary relative">
               <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" className="w-full h-full">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
               <div className="absolute inset-0 bg-gradient-to-r from-blue-400/20 to-purple-400/20 rounded-full blur-xl"></div>
             </div>
-            <h3 className="text-3xl font-bold bg-gradient-to-r from-gray-900 via-blue-600 to-purple-600 bg-clip-text text-transparent mb-4">
+            <h3 className="text-3xl font-bold bg-gradient-to-r from-theme-primary via-blue-600 to-purple-600 bg-clip-text text-transparent mb-4">
               Ready to discover movies?
             </h3>
             <p className="text-theme-secondary text-lg max-w-md mx-auto mb-8">Use the search bar above to find your next favorite film. Explore different genres, directors, and discover hidden gems.</p>
@@ -274,9 +274,9 @@ function AppContent() {
             </div>
             <div className="flex items-center space-x-2 sm:space-x-4">
               <a href="#" className="hover:text-blue-600 transition-colors duration-200 font-medium">Privacy</a>
-              <span className="w-1 h-1 bg-gray-400 rounded-full"></span>
+              <span className="w-1 h-1 bg-theme-tertiary rounded-full"></span>
               <a href="#" className="hover:text-blue-600 transition-colors duration-200 font-medium">Terms</a>
-              <span className="w-1 h-1 bg-gray-400 rounded-full"></span>
+              <span className="w-1 h-1 bg-theme-tertiary rounded-full"></span>
               <a href="#" className="hover:text-blue-600 transition-colors duration-200 font-medium">Contact</a>
             </div>
           </div>
@@ -296,9 +296,7 @@ function AppContent() {
 // Wrap the app with ThemeProvider
 function App() {
   return (
-    <ThemeProvider>
-      <AppContent />
-    </ThemeProvider>
+    <AppContent />
   );
 }
 

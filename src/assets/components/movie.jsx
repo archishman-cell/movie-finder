@@ -1,8 +1,6 @@
 import React from 'react';
-import { useTheme } from '../../contexts/ThemeContext';
 
 const Movie = ({ movie, onClick }) => {
-  const { theme } = useTheme();
   // Handle missing poster with fallback
   const posterUrl = movie.Poster && movie.Poster !== 'N/A' 
     ? movie.Poster 
@@ -33,7 +31,7 @@ const Movie = ({ movie, onClick }) => {
       className="group cursor-pointer transform transition-all duration-500 hover:scale-105 hover:-translate-y-2 w-full"
       onClick={() => onClick && onClick(movie)}
     >
-      <div className="relative card-theme backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-2xl border border-theme overflow-hidden transition-all duration-500 group-hover:shadow-gray-400/25">
+              <div className="relative card-theme backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-2xl border border-theme overflow-hidden transition-all duration-500 group-hover:shadow-theme/25">
         {/* Subtle highlight effect */}
         <div className="absolute inset-0 rounded-2xl bg-theme-tertiary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
         
@@ -53,7 +51,7 @@ const Movie = ({ movie, onClick }) => {
           
           {/* Floating Rating Badge */}
           {rating !== 'N/A' && (
-            <div className="absolute top-3 right-3 bg-theme-primary/95 backdrop-blur-md text-theme-contrast px-3 py-1.5 rounded-full text-sm font-bold shadow-lg transform scale-0 group-hover:scale-100 transition-all duration-500 delay-200 border border-theme">
+            <div className="absolute top-3 right-3 bg-black text-white px-3 py-1.5 rounded-full text-sm font-bold shadow-lg transform scale-0 group-hover:scale-100 transition-all duration-500 delay-200 border border-theme">
               <div className="flex items-center space-x-1">
                 <span className="text-yellow-500">⭐</span>
                 <span>{rating}</span>
