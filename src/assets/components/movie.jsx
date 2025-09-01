@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Movie = ({ movie, onClick }) => {
+const Movie = ({ movie, onClick, onToggleWishlist, isInWishlist }) => {
   // Handle missing poster with fallback
   const posterUrl = movie.Poster && movie.Poster !== 'N/A' 
     ? movie.Poster 
@@ -49,9 +49,28 @@ const Movie = ({ movie, onClick }) => {
           {/* Simple Overlay */}
           <div className="absolute inset-0 bg-theme-tertiary/40 opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
           
+          {/* Wishlist Button - Always visible on mobile, hover on desktop */}
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onToggleWishlist && onToggleWishlist(movie);
+            }}
+            className="absolute top-3 right-3 bg-black/70 backdrop-blur-md text-white p-2 rounded-full shadow-lg transform scale-100 sm:scale-0 sm:group-hover:scale-100 transition-all duration-500 delay-100 hover:bg-red-500 hover:scale-110 z-20"
+            title={isInWishlist ? "Remove from wishlist" : "Add to wishlist"}
+          >
+            <svg 
+              className={`w-5 h-5 transition-colors duration-300 ${isInWishlist ? 'text-red-500' : 'text-white'}`} 
+              fill={isInWishlist ? 'currentColor' : 'none'} 
+              stroke="currentColor" 
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+            </svg>
+          </button>
+
           {/* Floating Rating Badge */}
           {rating !== 'N/A' && (
-            <div className="absolute top-3 right-3 bg-black text-white px-3 py-1.5 rounded-full text-sm font-bold shadow-lg transform scale-0 group-hover:scale-100 transition-all duration-500 delay-200 border border-theme">
+            <div className="absolute top-3 left-3 bg-black text-white px-3 py-1.5 rounded-full text-sm font-bold shadow-lg transform scale-0 group-hover:scale-100 transition-all duration-500 delay-200 border border-theme">
               <div className="flex items-center space-x-1">
                 <span className="text-yellow-500">⭐</span>
                 <span>{rating}</span>
@@ -60,7 +79,7 @@ const Movie = ({ movie, onClick }) => {
           )}
 
           {/* Year Badge */}
-          <div className="absolute top-3 left-3 bg-black/70 backdrop-blur-md text-white px-2 py-1 rounded-lg text-xs font-medium transform -translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-100 sm:opacity-100 sm:translate-y-0">
+          <div className="absolute bottom-3 left-3 bg-black/70 backdrop-blur-md text-white px-2 py-1 rounded-lg text-xs font-medium transform translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-100 sm:opacity-100 sm:translate-y-0">
             {year}
           </div>
 

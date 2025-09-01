@@ -182,25 +182,7 @@ const MovieDetail = ({ movie, isOpen, onClose }) => {
               )}
             </div>
 
-            {/* Enhanced Action Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 pt-6 border-t border-theme">
-                              <button className="flex-1 bg-theme-tertiary text-theme-primary py-3 sm:py-4 px-6 sm:px-8 rounded-2xl font-semibold hover:bg-theme-tertiary/90 transition-all duration-300 hover:shadow-xl hover:shadow-theme/30 transform hover:scale-105">
-                <div className="flex items-center justify-center space-x-2">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  <span>Watch Now</span>
-                </div>
-              </button>
-              <button className="flex-1 bg-theme-secondary text-theme-primary py-3 sm:py-4 px-6 sm:px-8 rounded-2xl font-semibold hover:bg-theme-secondary/90 transition-all duration-300 hover:shadow-lg transform hover:scale-105 border border-theme">
-                <div className="flex items-center justify-center space-x-2">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                  </svg>
-                  <span>Add to Watchlist</span>
-                </div>
-              </button>
-            </div>
+
           </div>
         </div>
       </div>
