@@ -15,12 +15,12 @@ const MovieDetail = ({ movie, isOpen, onClose }) => {
       onClick={handleBackdropClick}
     >
       <div className="modal-theme backdrop-blur-xl rounded-3xl shadow-2xl shadow-theme/20 max-w-5xl w-full max-h-[90vh] overflow-y-auto no-scrollbar animate-slideUp border border-theme relative transition-all duration-300 modal-content smooth-scroll">
-        {/* Enhanced Close Button */}
+        {/* Enhanced Close Button - Sticky Position */}
         <button
           onClick={onClose}
-          className="absolute top-4 sm:top-6 left-4 sm:left-6 text-theme-secondary hover:text-red-500 transition-all duration-300 z-10 group"
+          className="fixed top-6 left-6 sm:top-8 sm:left-8 text-theme-secondary hover:text-red-500 transition-all duration-300 z-50 group"
         >
-          <div className="bg-theme-primary/80 backdrop-blur-sm rounded-full p-2 shadow-lg border border-theme group-hover:bg-red-50 group-hover:border-red-200 transition-all duration-300">
+          <div className="bg-theme-primary/90 backdrop-blur-sm rounded-full p-2 shadow-xl border border-theme group-hover:bg-red-50 group-hover:border-red-200 transition-all duration-300">
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
@@ -56,13 +56,7 @@ const MovieDetail = ({ movie, isOpen, onClose }) => {
               )}
 
               {/* Play Button */}
-              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500">
-                <div className="bg-theme-primary/90 backdrop-blur-md rounded-full p-6 transform scale-75 group-hover:scale-100 transition-all duration-500 shadow-2xl">
-                  <svg className="w-12 h-12 text-theme-primary" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M8 5v14l11-7z"/>
-                  </svg>
-                </div>
-              </div>
+              
             </div>
           </div>
 

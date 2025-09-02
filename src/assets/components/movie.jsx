@@ -84,13 +84,7 @@ const Movie = ({ movie, onClick, onToggleWishlist, isInWishlist }) => {
           </div>
 
           {/* Play Button Overlay */}
-          <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500">
-            <div className="bg-theme-primary/90 backdrop-blur-md rounded-full p-4 transform scale-75 group-hover:scale-100 transition-all duration-500">
-              <svg className="w-8 h-8 text-theme-primary" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M8 5v14l11-7z"/>
-              </svg>
-            </div>
-          </div>
+          
         </div>
 
         {/* Movie Info */}

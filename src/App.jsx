@@ -40,10 +40,75 @@ function AppContent() {
     if (!BASE_URL) {
       // console.error('VITE_OMDB_API_URL is not set in environment variables');
       setError('API URL not configured. Please check your environment configuration.');
-    }
+    } 
   }, []);
 
-  // Search movies by title
+  // Helper function to search popular movies and filter by director/actor
+  const searchPopularMoviesAndFilter = async (query) => {
+    try {
+      // Search for popular movies using common terms
+      const popularTerms = ['movie', 'film', 'action', 'drama', 'comedy', 'thriller'];
+      let allMovies = [];
+      
+      for (const term of popularTerms.slice(0, 3)) { // Limit to 3 terms to avoid too many API calls
+        try {
+          const response = await fetch(`${BASE_URL}?s=${term}&apikey=${API_KEY}`);
+          const data = await response.json();
+          
+          if (data.Response === 'True' && data.Search && data.Search.length > 0) {
+            // Get detailed info for first 5 movies from each term
+            const detailedMovies = await Promise.all(
+              data.Search.slice(0, 5).map(async (movie) => {
+                const detailResponse = await fetch(`${BASE_URL}?i=${movie.imdbID}&apikey=${API_KEY}`);
+                const detailData = await detailResponse.json();
+                return detailData;
+              })
+            );
+            allMovies = [...allMovies, ...detailedMovies];
+          }
+        } catch (termError) {
+          continue;
+        }
+      }
+      
+      if (allMovies.length > 0) {
+        // Remove duplicates
+        const uniqueMovies = allMovies.filter((movie, index, self) => 
+          index === self.findIndex(m => m.imdbID === movie.imdbID)
+        );
+        
+        // Filter by director, actor, or other criteria
+        const filteredMovies = uniqueMovies.filter(movie => {
+          const searchTerm = query.toLowerCase();
+          const title = (movie.Title || '').toLowerCase();
+          const director = (movie.Director || '').toLowerCase();
+          const actors = (movie.Actors || '').toLowerCase();
+          const plot = (movie.Plot || '').toLowerCase();
+          
+          return title.includes(searchTerm) || 
+                 director.includes(searchTerm) || 
+                 actors.includes(searchTerm) ||
+                 plot.includes(searchTerm);
+        });
+        
+        if (filteredMovies.length > 0) {
+          setMovies(filteredMovies);
+          setError(null);
+        } else {
+          setMovies([]);
+          setError('No movies found. Try searching with different keywords or check your spelling.');
+        }
+      } else {
+        setMovies([]);
+        setError('No movies found. Try searching with different keywords or check your spelling.');
+      }
+    } catch (error) {
+      setMovies([]);
+      setError('No movies found. Try searching with different keywords or check your spelling.');
+    }
+  };
+
+  // Search movies by title, director, or other criteria
   const searchMovies = async (query, page = 1) => {
     if (!query.trim()) {
       setMovies([]);
@@ -66,20 +131,15 @@ function AppContent() {
       // console.log('API Key:', API_KEY ? `${API_KEY.substring(0, 4)}...` : 'NOT SET');
       // console.log('Base URL:', BASE_URL);
 
-      const fullUrl = `${BASE_URL}?s=${encodeURIComponent(query)}&apikey=${API_KEY}`;
-      // console.log('Full URL being called:', fullUrl);
+      // First try direct search by title
+      const directSearchUrl = `${BASE_URL}?s=${encodeURIComponent(query)}&apikey=${API_KEY}`;
+      const response = await fetch(directSearchUrl);
       
-      const response = await fetch(fullUrl);
-      
-      // console.log('Response status:', response.status);
-      // console.log('Response ok:', response.ok);
-
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
       const data = await response.json();
-      // console.log('API Response:', data);
 
       if (data.Response === 'True' && data.Search && data.Search.length > 0) {
         // Fetch detailed info for each movie
@@ -90,16 +150,31 @@ function AppContent() {
             return detailData;
           })
         );
-        setMovies(detailedMovies);
-        setError(null);
-      } else {
-        setMovies([]);
-        // Check if it's an API key error
-        if (data.Error && data.Error.includes('API key')) {
-          setError('Invalid API key. Please check your OMDB API key configuration.');
+        
+        // Filter results to include movies where the query matches title, director, or actors
+        const filteredMovies = detailedMovies.filter(movie => {
+          const searchTerm = query.toLowerCase();
+          const title = (movie.Title || '').toLowerCase();
+          const director = (movie.Director || '').toLowerCase();
+          const actors = (movie.Actors || '').toLowerCase();
+          const plot = (movie.Plot || '').toLowerCase();
+          
+          return title.includes(searchTerm) || 
+                 director.includes(searchTerm) || 
+                 actors.includes(searchTerm) ||
+                 plot.includes(searchTerm);
+        });
+        
+        if (filteredMovies.length > 0) {
+          setMovies(filteredMovies);
+          setError(null);
         } else {
-          setError(data.Error || 'No movies found');
+          // If no direct matches, try searching popular movies and filter
+          await searchPopularMoviesAndFilter(query);
         }
+      } else {
+        // If no direct results, try searching popular movies and filter
+        await searchPopularMoviesAndFilter(query);
       }
     } catch (err) {
       // console.error('Error fetching movies:', err);
@@ -125,7 +200,7 @@ function AppContent() {
     const timeoutId = setTimeout(() => {
       if (searchQuery && searchQuery.trim().length >= 3) {
         searchMovies(searchQuery);
-      } else if (searchQuery.trim().length < 3) {
+      } else if (searchQuery.trim().length < 1) {
         setMovies([]);
         setError(null);
       } else {
