@@ -28,38 +28,32 @@ const Movie = ({ movie, onClick, onToggleWishlist, isInWishlist }) => {
 
   return (
     <div 
-      className="group cursor-pointer transform transition-all duration-500 hover:scale-105 hover:-translate-y-2 w-full"
+      className="group cursor-pointer transform transition-transform duration-300 hover:-translate-y-1 w-full animate-fadeInUp"
       onClick={() => onClick && onClick(movie)}
     >
-              <div className="relative card-theme backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-2xl border border-theme overflow-hidden transition-all duration-500 group-hover:shadow-theme/25">
-        {/* Subtle highlight effect */}
-        <div className="absolute inset-0 rounded-2xl bg-theme-tertiary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-        
+      <div className="relative bg-white rounded-xl border border-blue-100 overflow-hidden transition-shadow duration-300 shadow-sm hover:shadow-md">
         {/* Movie Poster */}
         <div className="relative aspect-[2/3] overflow-hidden">
           <img 
             src={posterUrl} 
             alt={movie.Title || 'Movie Poster'}
-            className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:rotate-1"
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
             onError={(e) => {
               e.target.src = 'https://via.placeholder.com/300x450/f8fafc/64748b?text=No+Poster';
             }}
           />
-          
-          {/* Simple Overlay */}
-          <div className="absolute inset-0 bg-theme-tertiary/40 opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
-          
-          {/* Wishlist Button - Always visible on mobile, hover on desktop */}
+
+          {/* Wishlist Button */}
           <button
             onClick={(e) => {
               e.stopPropagation();
               onToggleWishlist && onToggleWishlist(movie);
             }}
-            className="absolute top-3 right-3 bg-black/70 backdrop-blur-md text-white p-2 rounded-full shadow-lg transform scale-100 sm:scale-0 sm:group-hover:scale-100 transition-all duration-500 delay-100 hover:bg-red-500 hover:scale-110 z-20"
+            className="absolute top-3 right-3 bg-white/90 text-blue-700 p-2 rounded-full border border-blue-100 shadow-sm hover:bg-blue-50 transition-colors"
             title={isInWishlist ? "Remove from wishlist" : "Add to wishlist"}
           >
             <svg 
-              className={`w-5 h-5 transition-colors duration-300 ${isInWishlist ? 'text-red-500' : 'text-white'}`} 
+              className={`w-5 h-5 transition-colors duration-200 ${isInWishlist ? 'text-blue-600' : 'text-blue-700'}`} 
               fill={isInWishlist ? 'currentColor' : 'none'} 
               stroke="currentColor" 
               viewBox="0 0 24 24"
@@ -68,67 +62,54 @@ const Movie = ({ movie, onClick, onToggleWishlist, isInWishlist }) => {
             </svg>
           </button>
 
-          {/* Floating Rating Badge */}
+          {/* Rating Badge */}
           {rating !== 'N/A' && (
-            <div className="absolute top-3 left-3 bg-black text-white px-3 py-1.5 rounded-full text-sm font-bold shadow-lg transform scale-0 group-hover:scale-100 transition-all duration-500 delay-200 border border-theme">
+            <div className="absolute top-3 left-3 bg-blue-600 text-white px-2.5 py-1 rounded-full text-xs font-semibold shadow-sm">
               <div className="flex items-center space-x-1">
-                <span className="text-yellow-500">⭐</span>
+                <span>⭐</span>
                 <span>{rating}</span>
               </div>
             </div>
           )}
 
           {/* Year Badge */}
-          <div className="absolute bottom-3 left-3 bg-black/70 backdrop-blur-md text-white px-2 py-1 rounded-lg text-xs font-medium transform translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-100 sm:opacity-100 sm:translate-y-0">
+          <div className="absolute bottom-3 left-3 bg-white/90 text-slate-900 px-2 py-1 rounded-md text-xs font-medium border border-blue-100">
             {year}
           </div>
-
-          {/* Play Button Overlay */}
-          
         </div>
 
         {/* Movie Info */}
-        <div className="p-6 relative z-10">
+        <div className="p-4">
           {/* Title */}
-          <h3 className="font-bold text-theme-primary text-lg mb-3 line-clamp-2 transition-all duration-500">
+          <h3 className="font-semibold text-slate-900 text-base mb-2 line-clamp-2">
             {movie.Title || 'Unknown Title'}
           </h3>
           
           {/* Meta Info */}
-          <div className="flex items-center justify-between mb-4">
-            <span className="text-theme-secondary font-medium text-sm">{year}</span>
-            <span className="bg-theme-tertiary text-theme-primary px-3 py-1.5 rounded-full text-xs font-semibold shadow-md transform scale-95 group-hover:scale-100 transition-all duration-300">
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-slate-600 text-sm">{year}</span>
+            <span className="bg-blue-50 text-blue-700 px-2.5 py-1 rounded-full text-xs font-medium border border-blue-100">
               {genre}
             </span>
           </div>
 
           {/* Plot */}
-          <p className="text-theme-secondary text-sm line-clamp-2 leading-relaxed mb-4 group-hover:text-theme-primary transition-colors duration-300">
+          <p className="text-slate-600 text-sm line-clamp-2 leading-relaxed mb-3">
             {plot}
           </p>
 
           {/* Runtime with icon */}
           {movie.Runtime && movie.Runtime !== 'N/A' && (
-            <div className="flex items-center text-theme-secondary text-xs group-hover:text-theme-primary transition-colors duration-300">
-              <div className="w-4 h-4 mr-2 bg-theme-tertiary rounded-full flex items-center justify-center">
-                <svg className="w-2.5 h-2.5 text-theme-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="flex items-center text-slate-500 text-xs">
+              <div className="w-4 h-4 mr-2 bg-blue-50 rounded-full flex items-center justify-center border border-blue-100">
+                <svg className="w-2.5 h-2.5 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
               {movie.Runtime}
             </div>
           )}
-
-          {/* Hover indicator */}
-          <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-500 delay-300">
-            <div className="bg-theme-tertiary text-theme-primary px-3 py-1 rounded-full text-xs font-medium shadow-lg">
-              Click to view
-            </div>
-          </div>
         </div>
-
-        {/* Subtle shimmer effect on hover */}
-        <div className="absolute inset-0 bg-theme-tertiary/10 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
       </div>
     </div>
   );

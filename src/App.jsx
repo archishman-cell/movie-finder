@@ -258,13 +258,6 @@ function AppContent() {
 
   return (
     <div className="min-h-screen gradient-theme relative overflow-hidden no-scrollbar transition-colors duration-300">
-      {/* Background decorative elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-3xl transition-all duration-500"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-tr from-pink-400/20 to-blue-400/20 rounded-full blur-3xl transition-all duration-500"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-purple-400/10 to-pink-400/10 rounded-full blur-3xl transition-all duration-500"></div>
-      </div>
-
       <Navbar 
         onSearch={handleSearch} 
         searchValue={searchQuery} 
@@ -331,10 +324,10 @@ function AppContent() {
             {movies.map((movie, index) => (
               <div 
                 key={movie.imdbID}
-                className="transform transition-all duration-700"
+                className="transform transition-opacity duration-300"
                 style={{
-                  animationDelay: `${index * 100}ms`,
-                  animation: 'fadeInUp 0.8s ease-out forwards'
+                  animationDelay: `${index * 80}ms`,
+                  animation: 'fadeInUp 0.6s ease-out forwards'
                 }}
               >
                 <Movie 
@@ -435,26 +428,26 @@ function AppContent() {
 
       {/* Wishlist Modal */}
       {isWishlistOpen && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-theme-secondary rounded-2xl max-w-4xl w-full max-h-[80vh] overflow-hidden shadow-2xl">
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fadeIn">
+          <div className="bg-white rounded-2xl max-w-4xl w-full max-h-[80vh] overflow-hidden shadow-xl border border-blue-100 animate-slideUp">
             {/* Wishlist Header */}
-            <div className="flex items-center justify-between p-6 border-b border-theme/20">
+            <div className="flex items-center justify-between p-6 border-b border-blue-100">
               <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 bg-gradient-to-r from-pink-500 to-red-500 rounded-xl flex items-center justify-center">
-                  <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                <div className="w-10 h-10 bg-blue-50 border border-blue-100 rounded-xl flex items-center justify-center">
+                  <svg className="w-6 h-6 text-blue-700" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
                   </svg>
                 </div>
                 <div>
-                  <h2 className="text-2xl font-bold text-theme-primary">My Wishlist</h2>
-                  <p className="text-theme-secondary">{wishlist.length} movie{wishlist.length !== 1 ? 's' : ''} saved</p>
+                  <h2 className="text-2xl font-bold text-slate-900">My Wishlist</h2>
+                  <p className="text-slate-600">{wishlist.length} movie{wishlist.length !== 1 ? 's' : ''} saved</p>
                 </div>
               </div>
               <button
                 onClick={closeWishlist}
-                className="p-2 hover:bg-theme/10 rounded-lg transition-colors"
+                className="p-2 hover:bg-blue-50 rounded-lg transition-colors"
               >
-                <svg className="w-6 h-6 text-theme-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-6 h-6 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
@@ -464,18 +457,18 @@ function AppContent() {
             <div className="p-6 overflow-y-auto max-h-[60vh]">
               {wishlist.length === 0 ? (
                 <div className="text-center py-12">
-                  <div className="w-24 h-24 mx-auto mb-6 text-theme-tertiary">
+                  <div className="w-24 h-24 mx-auto mb-6 text-blue-200">
                     <svg fill="currentColor" viewBox="0 0 24 24" className="w-full h-full">
                       <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
                     </svg>
                   </div>
-                  <h3 className="text-xl font-bold text-theme-primary mb-2">Your wishlist is empty</h3>
-                  <p className="text-theme-secondary">Start adding movies to your wishlist by clicking the heart icon on any movie!</p>
+                  <h3 className="text-xl font-bold text-slate-900 mb-2">Your wishlist is empty</h3>
+                  <p className="text-slate-600">Start adding movies to your wishlist by clicking the heart icon on any movie!</p>
                 </div>
               ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   {wishlist.map((movie) => (
-                    <div key={movie.imdbID} className="bg-theme-primary/5 rounded-xl p-4 border border-theme/10 hover:border-theme/20 transition-colors">
+                    <div key={movie.imdbID} className="bg-white rounded-xl p-4 border border-blue-100 hover:border-blue-200 transition-colors animate-fadeInUp">
                       <div className="flex space-x-3">
                         <img
                           src={movie.Poster && movie.Poster !== 'N/A' ? movie.Poster : 'https://via.placeholder.com/60x90/f8fafc/64748b?text=No+Poster'}
@@ -483,16 +476,16 @@ function AppContent() {
                           className="w-12 h-16 object-cover rounded-lg"
                         />
                         <div className="flex-1 min-w-0">
-                          <h4 className="font-semibold text-theme-primary text-sm truncate">{movie.Title}</h4>
-                          <p className="text-theme-secondary text-xs">{movie.Year}</p>
-                          <p className="text-theme-tertiary text-xs truncate">{movie.Genre}</p>
+                          <h4 className="font-semibold text-slate-900 text-sm truncate">{movie.Title}</h4>
+                          <p className="text-slate-600 text-xs">{movie.Year}</p>
+                          <p className="text-slate-500 text-xs truncate">{movie.Genre}</p>
                         </div>
                         <button
                           onClick={() => removeFromWishlist(movie.imdbID)}
-                          className="p-1.5 hover:bg-red-100 rounded-full transition-colors group"
+                          className="p-1.5 hover:bg-blue-50 rounded-full transition-colors group"
                           title="Remove from wishlist"
                         >
-                          <svg className="w-4 h-4 text-red-500 group-hover:text-red-700 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg className="w-4 h-4 text-slate-700 group-hover:text-slate-900 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                           </svg>
                         </button>
